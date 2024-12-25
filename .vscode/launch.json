@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Main",
             "request": "launch",
+            "mainClass": "designpatterns.state_pattern_pizza.Main",
+            "projectName": "java-design-patterns_32e0d33a"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
             "mainClass": "designpatterns.state_pattern.Main",
             "projectName": "java-design-patterns_32e0d33a"
         },
