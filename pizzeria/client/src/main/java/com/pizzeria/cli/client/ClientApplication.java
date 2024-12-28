@@ -1,7 +1,6 @@
 package com.pizzeria.cli.client;
 
 import java.io.Console;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +42,9 @@ public class ClientApplication implements CommandLineRunner {
 			}
 		} else {
 			System.out.println("Invalid command....");
+			log.error("INVALID");
 		}
 	}
+
+	
 }
