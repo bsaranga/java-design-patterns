@@ -1,5 +1,7 @@
 package com.pizzeria.cli.client;
 
+import java.io.Console;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +25,16 @@ public class ClientApplication implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(ClientApplication.class);
 
+	private final Console console = System.console();
+
 	public static void main(String[] args) {
 		SpringApplication.run(ClientApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(String.format("%s/greeting?name=Saranga", pizza_server_url));
 		String command = "";
-		command = System.console().readLine("Enter 'REQ' to call API: ");
+		command = console.readLine("Enter 'REQ' to call API: ");
 		if (command.equalsIgnoreCase("REQ")) {
 			System.out.println("Calling API....");
 			GreetingDTO greeting = restTemplate.getForObject(String.format("%s/greeting?name=Saranga", pizza_server_url), GreetingDTO.class);
