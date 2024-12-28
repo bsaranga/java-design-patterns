@@ -1,6 +1,5 @@
 package com.pizzeria.cli.client;
 
-import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
 import com.pizzeria.cli.client.dtos.GreetingDTO;
 
-@SpringBootApplication
 @Profile("!test")
+@SpringBootApplication
 public class ClientApplication implements CommandLineRunner {
 
 	@Autowired
@@ -25,10 +24,8 @@ public class ClientApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.print("Enter 'REQ' to call API: ");
 		String command = "";
-		Scanner scanner = new Scanner(System.in);
-		command = scanner.nextLine();
+		command = System.console().readLine("Enter 'REQ' to call API: ");
 
 		if (command.equalsIgnoreCase("REQ")) {
 			System.out.println("Calling API....");
@@ -39,7 +36,5 @@ public class ClientApplication implements CommandLineRunner {
 		} else {
 			System.out.println("Invalid command....");
 		}
-
-		scanner.close();
 	}
 }
