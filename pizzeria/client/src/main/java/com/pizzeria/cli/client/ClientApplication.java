@@ -13,7 +13,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.pizzeria.cli.client.commands.Executor;
 import com.pizzeria.cli.client.commands.ExitCommand;
+import com.pizzeria.cli.client.display.Bg;
+import com.pizzeria.cli.client.display.BgColor;
 import com.pizzeria.cli.client.display.Bold;
+import com.pizzeria.cli.client.display.Colored;
+import com.pizzeria.cli.client.display.Color;
 import com.pizzeria.cli.client.display.Display;
 import com.pizzeria.cli.client.state.order.Order;
 import com.pizzeria.cli.client.state.order.OrderState;
@@ -47,14 +51,18 @@ public class ClientApplication implements CommandLineRunner {
 		
 		Display display = new Display();
 		Bold boldDisplay = new Bold(display);
+		Colored colorDisplay = new Colored(display);
+		Bg bgDisplay = new Bg(display);
 
-		boldDisplay.display("Welcome to Pizzeria CLI Client\n");
+		boldDisplay.display("🍕🍕🍕 Welcome to Arshvin's Pizzeria 🍕🍕🍕\n");
+		colorDisplay.setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizzas ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
+		display.display("To exit at any time, type 'exit'\n\n");
 		
 		orderState.setState(Order.NOOP);
 		String command = "";
 		
 		while (!command.equalsIgnoreCase("exit")) {
-			command = console.readLine(orderState.prompt).trim();
+			command = console.readLine(bgDisplay.setBgColor(BgColor.YELLOW).text(orderState.prompt)).trim();
 
 			switch (command.toLowerCase()) {
 				case "order":

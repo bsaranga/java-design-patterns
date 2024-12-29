@@ -6,4 +6,9 @@ public class Display implements IDisplay {
     public void display(String message) {
         System.out.println(message);
     }
+
+    @Override
+    public String text(String message) {
+        return message;
+    }
 }

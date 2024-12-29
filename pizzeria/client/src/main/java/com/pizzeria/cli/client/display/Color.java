@@ -1,17 +1,21 @@
 package com.pizzeria.cli.client.display;
 
-public class Color extends DisplayDecorator {
+public enum Color {
+    RED("\033[31m"),
+    GREEN("\033[32m"),
+    YELLOW("\033[33m"),
+    BLUE("\033[34m"),
+    MAGENTA("\033[35m"),
+    CYAN("\033[36m"),
+    WHITE("\033[37m");
 
-    private Colors color;
+    private final String code;
 
-    public Color(IDisplay display, Colors color) {
-        super(display);
-        this.color = color;
+    Color(String code) {
+        this.code = code;
     }
 
-    @Override
-    public void display(String message) {
-        System.out.print(color.getCode() + message + TextStyle.RESET);
+    public String getCode() {
+        return this.code;
     }
-    
 }
