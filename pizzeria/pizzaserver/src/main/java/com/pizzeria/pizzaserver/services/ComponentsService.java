@@ -3,8 +3,13 @@ package com.pizzeria.pizzaserver.services;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pizzeria.pizzaserver.models.PizzaComponent;
 
 @Service
 public class ComponentsService {
@@ -12,18 +17,33 @@ public class ComponentsService {
     @Autowired
     private Connection connection;
 
-    public void getAllPizzaComponents() {
+    public List<PizzaComponent> getAllPizzaComponents() {
         try (
             Statement statement = connection.createStatement();
         ){
             statement.setQueryTimeout(30);
-            ResultSet rs = statement.executeQuery("SELECT * FROM components");
+            List<PizzaComponent> components = new ArrayList<>();
+            
+            ResultSet rs = statement.executeQuery("""
+                select c.id, c.name, ct.component_type as type, c.description, c.price from components c 
+                inner join components_types ct on c.type_id = ct.id
+                """);
+            
             while (rs.next()) {
-                System.out.print("id = " + rs.getInt("id"));
-                System.out.println("content = " + rs.getString("name"));
+                components.addLast(new PizzaComponent(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("type"),
+                    rs.getString("description"),
+                    rs.getDouble("price")
+                ));
             }
+
+            return components;
+
         } catch (Exception e) {
             System.out.println(e);
         }
+        return List.of();
     }
 }
