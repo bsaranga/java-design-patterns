@@ -1,10 +1,13 @@
 package com.pizzeria.cli.client.state.order;
 
 public enum AppStateProps {
-    // cart states
+    // user states
     NOOP("noop"), // no operation
     REGISTERED("registered"),
     LOGGEDIN("loggedin"),
+    LOGGEDOUT("loggedout"),
+
+    // order states
     ADDED("add"),
     EMPTIED("remove"),
     CANCELLED("cancel"),

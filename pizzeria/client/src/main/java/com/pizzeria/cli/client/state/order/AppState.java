@@ -8,6 +8,9 @@ public class AppState implements IState<AppStateProps> {
     
     private AppStateProps state;
     public String prompt;
+    
+    public String loggedInUser;
+    public String sessionToken;
 
     public AppState() {
         this.prompt = "Welcome, to Arshvin's Pizzeria. Before you order, please login or create an account: ";
@@ -26,6 +29,12 @@ public class AppState implements IState<AppStateProps> {
     @Override
     public void setPrompt(String prompt) {
         this.prompt = prompt;
+    }
+
+    @Override
+    public void setSession(String username, String sessionToken) {
+        this.loggedInUser = username;
+        this.sessionToken = sessionToken;
     }
     
 }

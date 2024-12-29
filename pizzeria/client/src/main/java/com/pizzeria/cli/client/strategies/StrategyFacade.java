@@ -12,11 +12,18 @@ public class StrategyFacade {
     @Autowired
     private AccountCreationStrategy accountCreationStrategy;
 
+    @Autowired
+    private LogoutStrategy logoutStrategy;
+
     public LoginStrategy getLoginStrategy() {
         return loginStrategy;
     }
 
     public AccountCreationStrategy getAccountCreationStrategy() {
         return accountCreationStrategy;
+    }
+
+    public LogoutStrategy getLogoutStrategy() {
+        return logoutStrategy;
     }
 }

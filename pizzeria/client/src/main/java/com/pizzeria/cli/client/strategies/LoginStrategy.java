@@ -54,6 +54,7 @@ public class LoginStrategy implements IStrategy<AppStateProps> {
                 throw new RuntimeException("Login failed");
             }
 
+            state.setSession(loginDto.username(), sessionDto.sessionToken());
             state.setState(AppStateProps.LOGGEDIN);
             state.setPrompt("You may order now, select an option: ");
 

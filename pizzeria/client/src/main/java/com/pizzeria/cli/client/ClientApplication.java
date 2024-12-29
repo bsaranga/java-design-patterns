@@ -87,6 +87,10 @@ public class ClientApplication implements CommandLineRunner {
 					case "":
 						break;
 					case "3":
+						if (state.getState() == AppStateProps.LOGGEDIN) {
+							strategyContext.setStrategy(strategyFacade.getLogoutStrategy());
+							strategyContext.executeStrategy();
+						}
 						executor.setCommand(new ExitCommand()).execute();
 						break;
 					default:
