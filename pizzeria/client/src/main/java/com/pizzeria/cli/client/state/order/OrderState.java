@@ -10,7 +10,7 @@ public class OrderState implements IState<Order> {
     public String prompt;
 
     public OrderState() {
-        this.prompt = "What would you like to order today?";
+        this.prompt = "Welcome, to Arshvin's Pizzeria. Before you order, please login or create an account: ";
     }
 
     @Override

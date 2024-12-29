@@ -4,7 +4,7 @@ public class Display implements IDisplay {
     
     @Override
     public void display(String message) {
-        System.out.println(message);
+        System.out.print(message);
     }
 
     @Override

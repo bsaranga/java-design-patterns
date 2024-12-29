@@ -2,7 +2,8 @@ package com.pizzeria.cli.client.state.order;
 
 public enum Order {
     // cart states
-    NOOP("noop"),
+    NOOP("noop"), // no operation
+    LOGGEDIN("loggedin"),
     ADDED("add"),
     EMPTIED("remove"),
     CANCELLED("cancel"),

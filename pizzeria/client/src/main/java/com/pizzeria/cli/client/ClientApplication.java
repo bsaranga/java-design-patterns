@@ -56,28 +56,25 @@ public class ClientApplication implements CommandLineRunner {
 
 		boldDisplay.display("🍕🍕🍕 Welcome to Arshvin's Pizzeria 🍕🍕🍕\n");
 		colorDisplay.setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizzas ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
-		display.display("To exit at any time, type 'exit'\n\n");
+		display.display("Available Commands:\n");
+		display.display("    1. Create Account\n");
+		display.display("    2. Login\n");
+		display.display("    3. Exit\n\n");
 		
 		orderState.setState(Order.NOOP);
 		String command = "";
 		
-		while (!command.equalsIgnoreCase("exit")) {
+		while (orderState.getState() != Order.EXIT) {
 			command = console.readLine(bgDisplay.setBgColor(BgColor.YELLOW).text(orderState.prompt)).trim();
 
 			switch (command.toLowerCase()) {
-				case "order":
-					log.info("Making order...");
-					orderState.setState(Order.ORDERED);
+				case "1":
+					colorDisplay.setColor(Color.BLUE).display("Creating account...\n");
 					break;
-				case "cancel":
-					log.info("Cancelling order...");
-					orderState.setState(Order.CANCELLED);
+				case "2":
+					colorDisplay.setColor(Color.BLUE).display("Logging in...\n");
 					break;
-				case "status":
-					log.info("Checking order status...");
-					log.info("Order status: {}", orderState.getState());
-					break;
-				case "exit":
+				case "3":
 					executor.setCommand(new ExitCommand()).execute();
 					break;
 				default:
