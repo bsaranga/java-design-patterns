@@ -17,8 +17,8 @@ import com.pizzeria.cli.client.display.BgColor;
 import com.pizzeria.cli.client.display.Color;
 import com.pizzeria.cli.client.display.DisplayFacade;
 import com.pizzeria.cli.client.prompters.Prompter;
-import com.pizzeria.cli.client.state.order.Order;
-import com.pizzeria.cli.client.state.order.OrderState;
+import com.pizzeria.cli.client.state.order.AppStateProps;
+import com.pizzeria.cli.client.state.order.AppState;
 import com.pizzeria.cli.client.strategies.Context;
 import com.pizzeria.cli.client.strategies.StrategyFacade;
 
@@ -27,7 +27,7 @@ import com.pizzeria.cli.client.strategies.StrategyFacade;
 public class ClientApplication implements CommandLineRunner {
 
 	@Autowired
-	private OrderState orderState;
+	private AppState state;
 
 	@Autowired
 	private Executor executor;
@@ -55,15 +55,15 @@ public class ClientApplication implements CommandLineRunner {
 			DisplayFacade.getBoldDisplay().display("🍕🍕🍕 Welcome to Arshvin's Pizzeria 🍕🍕🍕\n");
 			DisplayFacade.getColorDisplay().setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizza ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
 			
-			orderState.setState(Order.NOOP);
+			state.setState(AppStateProps.NOOP);
 			String command = "";
 			
-			while (orderState.getState() != Order.EXIT) {
+			while (state.getState() != AppStateProps.EXIT) {
 			
-				prompter.DisplayPromptForState(orderState.getState());
-				command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(orderState.prompt)).trim();
+				prompter.DisplayPromptForState(state.getState());
+				command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(state.prompt)).trim();
 
-				if (Arrays.asList(Order.NOOP, Order.REGISTERED).contains(orderState.getState())) {
+				if (Arrays.asList(AppStateProps.NOOP, AppStateProps.REGISTERED).contains(state.getState())) {
 					switch (command.toLowerCase()) {
 						case "1":
 							command = "";

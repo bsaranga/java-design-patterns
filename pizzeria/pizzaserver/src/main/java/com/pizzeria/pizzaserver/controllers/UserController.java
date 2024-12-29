@@ -40,10 +40,10 @@ public class UserController {
     }
 
     @PostMapping("/user/logout")
-    public ResponseEntity<Void> logoutUser(@RequestBody SessionDto entity) {
+    public ResponseEntity<StatusDto> logoutUser(@RequestBody SessionDto entity) {
         try {
             userManagerService.logoutUser(entity);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(new StatusDto("loggedout"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(500).body(null);
         }

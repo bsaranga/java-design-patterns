@@ -1,19 +1,19 @@
 package com.pizzeria.cli.client.commands;
 
 import com.pizzeria.cli.client.state.IState;
-import com.pizzeria.cli.client.state.order.Order;
+import com.pizzeria.cli.client.state.order.AppStateProps;
 
-public class ExitCommand implements ICommand<Order> {
+public class ExitCommand implements ICommand<AppStateProps> {
     
     @Override
-    public void execute(IState<Order> state) {
+    public void execute(IState<AppStateProps> state) {
         
-        if (state.getState() == Order.NOOP) {
+        if (state.getState() == AppStateProps.NOOP) {
             System.out.println("We hope you will order next time! Have a nice day.");
         } else {
             System.out.println("Thanks, and enjoy your pizza!");
         }
 
-        state.setState(Order.EXIT);
+        state.setState(AppStateProps.EXIT);
     }    
 }

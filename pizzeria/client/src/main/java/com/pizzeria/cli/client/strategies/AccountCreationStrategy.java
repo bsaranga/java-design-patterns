@@ -14,10 +14,10 @@ import com.pizzeria.cli.client.display.DisplayFacade;
 import com.pizzeria.cli.client.dtos.StatusDto;
 import com.pizzeria.cli.client.dtos.UserDto;
 import com.pizzeria.cli.client.state.IState;
-import com.pizzeria.cli.client.state.order.Order;
+import com.pizzeria.cli.client.state.order.AppStateProps;
 
 @Component
-public class AccountCreationStrategy implements IStrategy<Order> {
+public class AccountCreationStrategy implements IStrategy<AppStateProps> {
 
     @Value("${app.pizzaserver}")
 	private String pizza_server_url;
@@ -31,7 +31,7 @@ public class AccountCreationStrategy implements IStrategy<Order> {
     String prompt = "Enter username: ";
 
     @Override
-    public void execute(IState<Order> state) {
+    public void execute(IState<AppStateProps> state) {
 
         try {
             colorDisplay.setColor(Color.GREEN).display("Enter your details to create the account.\n");
@@ -63,7 +63,7 @@ public class AccountCreationStrategy implements IStrategy<Order> {
                 throw new RuntimeException("Account creation failed");
             }
 
-            state.setState(Order.REGISTERED);
+            state.setState(AppStateProps.REGISTERED);
             state.setPrompt("Select command: ");
 
         } catch (Exception e) {

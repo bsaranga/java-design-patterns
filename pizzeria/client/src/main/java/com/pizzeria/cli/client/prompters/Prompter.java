@@ -1,7 +1,7 @@
 package com.pizzeria.cli.client.prompters;
 
 import com.pizzeria.cli.client.display.IDisplay;
-import com.pizzeria.cli.client.state.order.Order;
+import com.pizzeria.cli.client.state.order.AppStateProps;
 
 public class Prompter {
     
@@ -11,8 +11,8 @@ public class Prompter {
         this.display = display;
     }
 
-    public void DisplayPromptForState(Order order) {
-        switch (order) {
+    public void DisplayPromptForState(AppStateProps stateProp) {
+        switch (stateProp) {
             case NOOP:
                 display.display("Available Commands:\n");
                 display.display("    1. Create Account\n");
@@ -30,7 +30,7 @@ public class Prompter {
                 display.display("\nAvailable Options:\n");
                 display.display("    1. See our top 5 classic collection\n");
                 display.display("    2. Build Your Own Pizza\n");
-                display.display("    3. Exit\n\n");
+                display.display("    3. Logout & Exit\n\n");
                 break;
             case ADDED:
                 display.display("You may add more items or order...\n");

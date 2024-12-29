@@ -4,22 +4,22 @@ import org.springframework.stereotype.Component;
 import com.pizzeria.cli.client.state.IState;
 
 @Component
-public class OrderState implements IState<Order> {
+public class AppState implements IState<AppStateProps> {
     
-    private Order state;
+    private AppStateProps state;
     public String prompt;
 
-    public OrderState() {
+    public AppState() {
         this.prompt = "Welcome, to Arshvin's Pizzeria. Before you order, please login or create an account: ";
     }
 
     @Override
-    public void setState(Order state) {
+    public void setState(AppStateProps state) {
         this.state = state;
     }
 
     @Override
-    public Order getState() {
+    public AppStateProps getState() {
         return state;
     }
 

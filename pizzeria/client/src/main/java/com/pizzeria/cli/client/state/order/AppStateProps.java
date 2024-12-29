@@ -1,6 +1,6 @@
 package com.pizzeria.cli.client.state.order;
 
-public enum Order {
+public enum AppStateProps {
     // cart states
     NOOP("noop"), // no operation
     REGISTERED("registered"),
@@ -21,7 +21,7 @@ public enum Order {
 
     private String value;
 
-    Order(String value) {
+    AppStateProps(String value) {
         this.value = value;
     }
 
