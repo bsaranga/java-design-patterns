@@ -21,9 +21,8 @@ import com.pizzeria.cli.client.display.DisplayFacade;
 import com.pizzeria.cli.client.prompters.Prompter;
 import com.pizzeria.cli.client.state.order.Order;
 import com.pizzeria.cli.client.state.order.OrderState;
-import com.pizzeria.cli.client.strategies.AccountCreationStrategy;
 import com.pizzeria.cli.client.strategies.Context;
-import com.pizzeria.cli.client.strategies.LoginStrategy;
+import com.pizzeria.cli.client.strategies.StrategyFacade;
 
 @Profile("!test")
 @SpringBootApplication
@@ -44,6 +43,9 @@ public class ClientApplication implements CommandLineRunner {
 	@Autowired
 	private Context strategyContext;
 
+	@Autowired
+	private StrategyFacade strategyFacade;
+
 	private static final Logger log = LoggerFactory.getLogger(ClientApplication.class);
 
 	private final Console console = System.console();
@@ -58,7 +60,7 @@ public class ClientApplication implements CommandLineRunner {
 		Prompter prompter = new Prompter(DisplayFacade.getDisplay());
 
 		DisplayFacade.getBoldDisplay().display("🍕🍕🍕 Welcome to Arshvin's Pizzeria 🍕🍕🍕\n");
-		DisplayFacade.getColorDisplay().setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizzas ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
+		DisplayFacade.getColorDisplay().setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizza ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
 		
 		orderState.setState(Order.NOOP);
 		String command = "";
@@ -72,12 +74,12 @@ public class ClientApplication implements CommandLineRunner {
 				switch (command.toLowerCase()) {
 					case "1":
 						command = "";
-						strategyContext.setStrategy(new AccountCreationStrategy());
+						strategyContext.setStrategy(strategyFacade.getAccountCreationStrategy());
 						strategyContext.executeStrategy();
 						break;
 					case "2":
 						command = "";
-						strategyContext.setStrategy(new LoginStrategy());
+						strategyContext.setStrategy(strategyFacade.getLoginStrategy());
 						strategyContext.executeStrategy();
 						break;
 					case "3":

@@ -2,6 +2,8 @@ package com.pizzeria.cli.client.strategies;
 
 import java.io.Console;
 
+import org.springframework.stereotype.Component;
+
 import com.pizzeria.cli.client.builders.UserDtoBuilder;
 import com.pizzeria.cli.client.display.Color;
 import com.pizzeria.cli.client.display.Colored;
@@ -10,6 +12,7 @@ import com.pizzeria.cli.client.dtos.UserDto;
 import com.pizzeria.cli.client.state.IState;
 import com.pizzeria.cli.client.state.order.Order;
 
+@Component
 public class AccountCreationStrategy implements IStrategy<Order> {
 
     Console console = System.console();
