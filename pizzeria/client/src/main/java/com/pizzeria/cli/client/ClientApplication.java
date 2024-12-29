@@ -1,6 +1,8 @@
 package com.pizzeria.cli.client;
 
 import java.io.Console;
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,20 +68,34 @@ public class ClientApplication implements CommandLineRunner {
 			prompter.DisplayPromptForState(orderState.getState());
 			command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(orderState.prompt)).trim();
 
+			if (Arrays.asList(Order.NOOP, Order.REGISTERED).contains(orderState.getState())) {
+				switch (command.toLowerCase()) {
+					case "1":
+						command = "";
+						strategyContext.setStrategy(new AccountCreationStrategy());
+						strategyContext.executeStrategy();
+						break;
+					case "2":
+						command = "";
+						strategyContext.setStrategy(new LoginStrategy());
+						strategyContext.executeStrategy();
+						break;
+					case "3":
+						command = "";
+						executor.setCommand(new ExitCommand()).execute();
+						break;
+				}
+			}
+
+			// Common case for every state
 			switch (command.toLowerCase()) {
-				case "1":
-					strategyContext.setStrategy(new AccountCreationStrategy());
-					strategyContext.executeStrategy();
-					break;
-				case "2":
-					strategyContext.setStrategy(new LoginStrategy());
-					strategyContext.executeStrategy();
+				case "":
 					break;
 				case "3":
 					executor.setCommand(new ExitCommand()).execute();
 					break;
 				default:
-					log.warn("Unknown command: {}", command);
+					DisplayFacade.getBgDisplay().setBgColor(BgColor.RED).display("Invalid command, try again...");
 					break;
 			}
 		}
