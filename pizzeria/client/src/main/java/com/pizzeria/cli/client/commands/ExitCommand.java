@@ -10,9 +10,9 @@ public class ExitCommand implements ICommand<Order> {
         
         if (state.getState() == Order.NOOP) {
             System.out.println("We hope you will order next time! Have a nice day.");
+        } else {
+            System.out.println("Thanks, and enjoy your pizza!");
         }
-
-        System.out.println("Thanks, and enjoy your pizza!");
 
         state.setState(Order.EXIT);
     }    

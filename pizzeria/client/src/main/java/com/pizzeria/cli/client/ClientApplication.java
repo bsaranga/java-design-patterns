@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.pizzeria.cli.client.commands.Executor;
 import com.pizzeria.cli.client.commands.ExitCommand;
+import com.pizzeria.cli.client.display.Bold;
 import com.pizzeria.cli.client.display.Display;
 import com.pizzeria.cli.client.state.order.Order;
 import com.pizzeria.cli.client.state.order.OrderState;
@@ -44,7 +45,11 @@ public class ClientApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Display.bold("Welcome to Pizzeria CLI Client");
+		Display display = new Display();
+		Bold boldDisplay = new Bold(display);
+
+		boldDisplay.display("Welcome to Pizzeria CLI Client\n");
+		
 		orderState.setState(Order.NOOP);
 		String command = "";
 		
