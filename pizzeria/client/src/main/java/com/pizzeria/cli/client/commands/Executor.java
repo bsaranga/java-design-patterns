@@ -14,11 +14,12 @@ public class Executor {
 
     private ICommand<Order> command;
 
-    public void setCommand(ICommand<Order> command) {
+    public Executor setCommand(ICommand<Order> command) {
         this.command = command;
+        return this;
     }
 
-    public void executeCommand() {
+    public void execute() {
         command.execute(state);
     }
 }

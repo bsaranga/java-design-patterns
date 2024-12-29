@@ -63,8 +63,7 @@ public class ClientApplication implements CommandLineRunner {
 					log.info("Order status: {}", orderState.getState());
 					break;
 				case "exit":
-					executor.setCommand(new ExitCommand());
-					executor.executeCommand();
+					executor.setCommand(new ExitCommand()).execute();
 					break;
 				default:
 					log.warn("Unknown command: {}", command);
