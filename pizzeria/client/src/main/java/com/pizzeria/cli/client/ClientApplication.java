@@ -10,7 +10,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
-import com.pizzeria.cli.client.dtos.GreetingDTO;
+
+import com.pizzeria.cli.client.commands.Executor;
+import com.pizzeria.cli.client.commands.ExitCommand;
+import com.pizzeria.cli.client.state.order.Order;
+import com.pizzeria.cli.client.state.order.OrderState;
 
 @Profile("!test")
 @SpringBootApplication
@@ -22,6 +26,12 @@ public class ClientApplication implements CommandLineRunner {
 	@Value("${app.pizzaserver}")
 	private String pizza_server_url;
 
+	@Autowired
+	private OrderState orderState;
+
+	@Autowired
+	private Executor executor;
+
 	private static final Logger log = LoggerFactory.getLogger(ClientApplication.class);
 
 	private final Console console = System.console();
@@ -32,19 +42,34 @@ public class ClientApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		orderState.setState(Order.NOOP);
 		String command = "";
-		command = console.readLine("Enter 'REQ' to call API: ");
-		if (command.equalsIgnoreCase("REQ")) {
-			System.out.println("Calling API....");
-			GreetingDTO greeting = restTemplate.getForObject(String.format("%s/greeting?name=Saranga", pizza_server_url), GreetingDTO.class);
-			if (greeting != null) {
-				log.info(greeting.toString());
+		
+		while (!command.equalsIgnoreCase("exit")) {
+			command = console.readLine(orderState.prompt).trim();
+
+			switch (command.toLowerCase()) {
+				case "order":
+					log.info("Making order...");
+					orderState.setState(Order.ORDERED);
+					break;
+				case "cancel":
+					log.info("Cancelling order...");
+					orderState.setState(Order.CANCELLED);
+					break;
+				case "status":
+					log.info("Checking order status...");
+					log.info("Order status: {}", orderState.getState());
+					break;
+				case "exit":
+					executor.setCommand(new ExitCommand());
+					executor.executeCommand();
+					break;
+				default:
+					log.warn("Unknown command: {}", command);
+					break;
 			}
-		} else {
-			System.out.println("Invalid command....");
-			log.error("INVALID");
 		}
 	}
-
-	
 }
