@@ -16,8 +16,8 @@ public class ComponentsController {
     @Autowired
     private ComponentsService componentsService;
 
-    @GetMapping("/greeting")
-    public List<PizzaComponent> greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+    @GetMapping("/getall")
+    public List<PizzaComponent> pizzaComponents(@RequestParam(value = "name", defaultValue = "World") String name) {
         return componentsService.getAllPizzaComponents();
     }
 }
