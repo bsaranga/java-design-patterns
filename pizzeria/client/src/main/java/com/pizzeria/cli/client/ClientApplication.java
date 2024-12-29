@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.pizzeria.cli.client.commands.Executor;
 import com.pizzeria.cli.client.commands.ExitCommand;
+import com.pizzeria.cli.client.display.Display;
 import com.pizzeria.cli.client.state.order.Order;
 import com.pizzeria.cli.client.state.order.OrderState;
 
@@ -20,11 +21,11 @@ import com.pizzeria.cli.client.state.order.OrderState;
 @SpringBootApplication
 public class ClientApplication implements CommandLineRunner {
 
-	@Autowired
-	private RestTemplate restTemplate;
-
 	@Value("${app.pizzaserver}")
 	private String pizza_server_url;
+
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Autowired
 	private OrderState orderState;
@@ -43,6 +44,7 @@ public class ClientApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+		Display.bold("Welcome to Pizzeria CLI Client");
 		orderState.setState(Order.NOOP);
 		String command = "";
 		
