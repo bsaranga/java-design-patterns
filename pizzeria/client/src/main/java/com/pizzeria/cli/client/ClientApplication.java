@@ -6,12 +6,10 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Profile;
-import org.springframework.web.client.RestTemplate;
 
 import com.pizzeria.cli.client.commands.Executor;
 import com.pizzeria.cli.client.commands.ExitCommand;
@@ -27,12 +25,6 @@ import com.pizzeria.cli.client.strategies.StrategyFacade;
 @Profile("!test")
 @SpringBootApplication
 public class ClientApplication implements CommandLineRunner {
-
-	@Value("${app.pizzaserver}")
-	private String pizza_server_url;
-
-	@Autowired
-	private RestTemplate restTemplate;
 
 	@Autowired
 	private OrderState orderState;
@@ -56,50 +48,55 @@ public class ClientApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
-		Prompter prompter = new Prompter(DisplayFacade.getDisplay());
 
-		DisplayFacade.getBoldDisplay().display("🍕🍕🍕 Welcome to Arshvin's Pizzeria 🍕🍕🍕\n");
-		DisplayFacade.getColorDisplay().setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizza ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
-		
-		orderState.setState(Order.NOOP);
-		String command = "";
-		
-		while (orderState.getState() != Order.EXIT) {
+		try {
+			Prompter prompter = new Prompter(DisplayFacade.getDisplay());
+
+			DisplayFacade.getBoldDisplay().display("🍕🍕🍕 Welcome to Arshvin's Pizzeria 🍕🍕🍕\n");
+			DisplayFacade.getColorDisplay().setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizza ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
 			
-			prompter.DisplayPromptForState(orderState.getState());
-			command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(orderState.prompt)).trim();
+			orderState.setState(Order.NOOP);
+			String command = "";
+			
+			while (orderState.getState() != Order.EXIT) {
+			
+				prompter.DisplayPromptForState(orderState.getState());
+				command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(orderState.prompt)).trim();
 
-			if (Arrays.asList(Order.NOOP, Order.REGISTERED).contains(orderState.getState())) {
+				if (Arrays.asList(Order.NOOP, Order.REGISTERED).contains(orderState.getState())) {
+					switch (command.toLowerCase()) {
+						case "1":
+							command = "";
+							strategyContext.setStrategy(strategyFacade.getAccountCreationStrategy());
+							strategyContext.executeStrategy();
+							break;
+						case "2":
+							command = "";
+							strategyContext.setStrategy(strategyFacade.getLoginStrategy());
+							strategyContext.executeStrategy();
+							break;
+						case "3":
+							command = "";
+							executor.setCommand(new ExitCommand()).execute();
+							break;
+					}
+				}
+
+				// Common case for every state
 				switch (command.toLowerCase()) {
-					case "1":
-						command = "";
-						strategyContext.setStrategy(strategyFacade.getAccountCreationStrategy());
-						strategyContext.executeStrategy();
-						break;
-					case "2":
-						command = "";
-						strategyContext.setStrategy(strategyFacade.getLoginStrategy());
-						strategyContext.executeStrategy();
+					case "":
 						break;
 					case "3":
-						command = "";
 						executor.setCommand(new ExitCommand()).execute();
+						break;
+					default:
+						DisplayFacade.getBgDisplay().setBgColor(BgColor.RED).display("Invalid command, try again...");
 						break;
 				}
 			}
-
-			// Common case for every state
-			switch (command.toLowerCase()) {
-				case "":
-					break;
-				case "3":
-					executor.setCommand(new ExitCommand()).execute();
-					break;
-				default:
-					DisplayFacade.getBgDisplay().setBgColor(BgColor.RED).display("Invalid command, try again...");
-					break;
-			}
+		} catch (Exception e) {
+			DisplayFacade.getBgDisplay().setBgColor(BgColor.RED).display("An unexpected error occurred.");
+			log.error("An unexpected error occurred.", e);
 		}
 	}
 }

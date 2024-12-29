@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pizzeria.pizzaserver.dto.LoginDto;
 import com.pizzeria.pizzaserver.dto.SessionDto;
+import com.pizzeria.pizzaserver.dto.StatusDto;
 import com.pizzeria.pizzaserver.dto.UserDto;
 import com.pizzeria.pizzaserver.models.User;
 import com.pizzeria.pizzaserver.services.UserManagerService;
@@ -19,10 +20,10 @@ public class UserController {
     private UserManagerService userManagerService;
 
     @PostMapping("/user/register")
-    public ResponseEntity<User> registerUser(@RequestBody UserDto entity) {        
+    public ResponseEntity<StatusDto> registerUser(@RequestBody UserDto entity) {
         try {
             User user = userManagerService.registerUser(entity);
-            return ResponseEntity.ok(user);
+            return ResponseEntity.ok(new StatusDto("registered"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(500).body(null);
         }
