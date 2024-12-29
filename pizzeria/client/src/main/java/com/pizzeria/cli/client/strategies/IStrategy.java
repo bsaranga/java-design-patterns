@@ -1,5 +1,7 @@
 package com.pizzeria.cli.client.strategies;
 
-public interface IStrategy {
-    void execute();
+import com.pizzeria.cli.client.state.IState;
+
+public interface IStrategy<T> {
+    void execute(IState<T> state);
 }

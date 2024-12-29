@@ -13,14 +13,15 @@ import org.springframework.web.client.RestTemplate;
 
 import com.pizzeria.cli.client.commands.Executor;
 import com.pizzeria.cli.client.commands.ExitCommand;
-import com.pizzeria.cli.client.display.Bg;
 import com.pizzeria.cli.client.display.BgColor;
-import com.pizzeria.cli.client.display.Bold;
-import com.pizzeria.cli.client.display.Colored;
 import com.pizzeria.cli.client.display.Color;
-import com.pizzeria.cli.client.display.Display;
+import com.pizzeria.cli.client.display.DisplayFacade;
+import com.pizzeria.cli.client.prompters.Prompter;
 import com.pizzeria.cli.client.state.order.Order;
 import com.pizzeria.cli.client.state.order.OrderState;
+import com.pizzeria.cli.client.strategies.AccountCreationStrategy;
+import com.pizzeria.cli.client.strategies.Context;
+import com.pizzeria.cli.client.strategies.LoginStrategy;
 
 @Profile("!test")
 @SpringBootApplication
@@ -38,6 +39,9 @@ public class ClientApplication implements CommandLineRunner {
 	@Autowired
 	private Executor executor;
 
+	@Autowired
+	private Context strategyContext;
+
 	private static final Logger log = LoggerFactory.getLogger(ClientApplication.class);
 
 	private final Console console = System.console();
@@ -49,30 +53,27 @@ public class ClientApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Display display = new Display();
-		Bold boldDisplay = new Bold(display);
-		Colored colorDisplay = new Colored(display);
-		Bg bgDisplay = new Bg(display);
+		Prompter prompter = new Prompter(DisplayFacade.getDisplay());
 
-		boldDisplay.display("🍕🍕🍕 Welcome to Arshvin's Pizzeria 🍕🍕🍕\n");
-		colorDisplay.setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizzas ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
-		display.display("Available Commands:\n");
-		display.display("    1. Create Account\n");
-		display.display("    2. Login\n");
-		display.display("    3. Exit\n\n");
+		DisplayFacade.getBoldDisplay().display("🍕🍕🍕 Welcome to Arshvin's Pizzeria 🍕🍕🍕\n");
+		DisplayFacade.getColorDisplay().setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizzas ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
 		
 		orderState.setState(Order.NOOP);
 		String command = "";
 		
 		while (orderState.getState() != Order.EXIT) {
-			command = console.readLine(bgDisplay.setBgColor(BgColor.YELLOW).text(orderState.prompt)).trim();
+			
+			prompter.DisplayPromptForState(orderState.getState());
+			command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(orderState.prompt)).trim();
 
 			switch (command.toLowerCase()) {
 				case "1":
-					colorDisplay.setColor(Color.BLUE).display("Creating account...\n");
+					strategyContext.setStrategy(new AccountCreationStrategy());
+					strategyContext.executeStrategy();
 					break;
 				case "2":
-					colorDisplay.setColor(Color.BLUE).display("Logging in...\n");
+					strategyContext.setStrategy(new LoginStrategy());
+					strategyContext.executeStrategy();
 					break;
 				case "3":
 					executor.setCommand(new ExitCommand()).execute();
