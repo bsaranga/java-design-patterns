@@ -3,5 +3,5 @@ CREATE TABLE user_session (
     user_id INTEGER NOT NULL,
     session_token TEXT NOT NULL,
     expired BOOLEAN DEFAULT 0,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
 );

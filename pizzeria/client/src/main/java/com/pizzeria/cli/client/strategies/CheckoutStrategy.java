@@ -151,7 +151,7 @@ public class CheckoutStrategy implements IStrategy<AppStateProps> {
 
                     // change state
                     state.setState(AppStateProps.ORDERED);
-                    state.setPrompt("Press 'b' to return to main menu...");
+                    state.setPrompt("Enter command: ");
 
                 } else {
                     cart.clearCart();

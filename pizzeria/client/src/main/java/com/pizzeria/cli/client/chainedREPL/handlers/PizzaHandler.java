@@ -71,7 +71,7 @@ public class PizzaHandler extends Handler {
         } else if (request.getState() == AppStateProps.ORDERED) {
             switch (request.getCommand().toLowerCase()) {
                 case "r":
-                    strategyContext.setStrategy(strategyFacade.getOrderStatusStrategy());
+                    strategyContext.setStrategy(strategyFacade.getOrderStatusObserverStrategy());
                     strategyContext.executeStrategy();
                     break;
                 default:

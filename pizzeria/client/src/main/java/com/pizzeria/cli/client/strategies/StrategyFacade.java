@@ -22,7 +22,7 @@ public class StrategyFacade {
     private CheckoutStrategy checkoutStrategy;
 
     @Autowired
-    private OrderStatusStrategy orderStatusStrategy;
+    private OrderStatusObserverStrategy orderStatusObserverStrategy;
 
     public LoginStrategy getLoginStrategy() {
         return loginStrategy;
@@ -44,7 +44,7 @@ public class StrategyFacade {
         return checkoutStrategy;
     }
 
-    public OrderStatusStrategy getOrderStatusStrategy() {
-        return orderStatusStrategy;
+    public OrderStatusObserverStrategy getOrderStatusObserverStrategy() {
+        return orderStatusObserverStrategy;
     }
 }
