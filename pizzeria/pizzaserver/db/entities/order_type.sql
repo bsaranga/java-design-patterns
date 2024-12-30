@@ -1,0 +1,4 @@
+CREATE TABLE order_type (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_type TEXT NOT NULL UNIQUE
+);

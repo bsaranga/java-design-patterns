@@ -1,0 +1,4 @@
+CREATE TABLE order_states (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_state TEXT NOT NULL UNIQUE
+);

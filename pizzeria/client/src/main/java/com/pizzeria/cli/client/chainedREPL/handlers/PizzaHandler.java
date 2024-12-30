@@ -45,9 +45,16 @@ public class PizzaHandler extends Handler {
                     handleNext(request);
                     break;
             }
+        } else if (request.getCommand().toLowerCase().equals("c")) { // handle order confirmation
+            if (cart.getProductIds().size() > 0) {
+                //strategyContext.setStrategy(strategyFacade.getCheckoutStrategy());
+                //strategyContext.executeStrategy();
+            } else {
+                handleNext(request);
+            }
         } else if (request.getState() == AppStateProps.SELECTIONMODE && !Arrays.asList("b", "x").contains(request.getCommand())) {
             try {
-                int selectedPizza = Integer.parseInt(request.getCommand());
+                int selectedPizza = Integer.parseInt(request.getCommand()); // throws exception if not a number
                 if (resourceState.getCuratedPizza(selectedPizza) != null) {
                     cart.addProduct(selectedPizza);
                     strategyContext.setStrategy(strategyFacade.getCuratedSelectionStrategy());
