@@ -36,5 +36,10 @@ public class AppState implements IState<AppStateProps> {
         this.loggedInUser = username;
         this.sessionToken = sessionToken;
     }
+
+    @Override
+    public String getSessionToken() {
+        return sessionToken;
+    }
     
 }

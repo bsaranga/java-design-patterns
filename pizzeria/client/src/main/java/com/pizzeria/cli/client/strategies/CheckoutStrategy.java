@@ -5,6 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +19,7 @@ import com.pizzeria.cli.client.display.Bold;
 import com.pizzeria.cli.client.display.Color;
 import com.pizzeria.cli.client.display.Colored;
 import com.pizzeria.cli.client.display.DisplayFacade;
+import com.pizzeria.cli.client.dtos.OrderDto;
 import com.pizzeria.cli.client.orderproc.Cart;
 import com.pizzeria.cli.client.orderproc.DeliveryMethod;
 import com.pizzeria.cli.client.orderproc.OrderStatus;
@@ -126,7 +132,22 @@ public class CheckoutStrategy implements IStrategy<AppStateProps> {
                     colorDisplay.setColor(Color.GREEN).display("Loyalty points accrued: " + loyaltyPoints + "\n\n");
 
                     // send order to kitchen
-                    colorDisplay.setColor(Color.GREEN).display("Order received...\n\n");
+                    OrderDto orderDto = orderStatus.getOrderDto();
+                    String sessionToken = state.getSessionToken();
+
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                    headers.set("Authorization", sessionToken);
+
+                    HttpEntity<OrderDto> request = new HttpEntity<>(orderDto, headers);
+
+                    ResponseEntity<String> response = restTemplate.postForEntity(pizza_server_url + "/orders/create", request, String.class);
+
+                    if (response.getStatusCode() == HttpStatus.OK) {
+                        colorDisplay.setColor(Color.GREEN).display("Order successfully sent to the kitchen.\n\n");
+                    } else {
+                        bgDisplay.setBgColor(BgColor.RED).display("Failed to send order to the kitchen.\n\n");
+                    }
 
                     // change state
                     state.setState(AppStateProps.ORDERED);
