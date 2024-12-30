@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.pizzeria.cli.client.display.Bg;
-import com.pizzeria.cli.client.display.BgColor;
 import com.pizzeria.cli.client.display.Bold;
 import com.pizzeria.cli.client.display.Color;
 import com.pizzeria.cli.client.display.Colored;
@@ -18,7 +17,7 @@ import com.pizzeria.cli.client.state.IState;
 import com.pizzeria.cli.client.state.order.AppStateProps;
 
 @Component
-public class SelectionStrategy implements IStrategy<AppStateProps> {
+public class CuratedSelectionStrategy implements IStrategy<AppStateProps> {
 
     @Value("${app.pizzaserver}")
 	private String pizza_server_url;
@@ -30,7 +29,7 @@ public class SelectionStrategy implements IStrategy<AppStateProps> {
     Bg bgDisplay = DisplayFacade.getBgDisplay();
     Bold boldDisplay = DisplayFacade.getBoldDisplay();
     Colored colorDisplay = DisplayFacade.getColorDisplay();
-    String prompt = "Select a pizza: ";
+    String prompt = "Select a pizza, or enter command: ";
 
     @Override
     public void execute(IState<AppStateProps> state) {

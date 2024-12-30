@@ -16,7 +16,7 @@ public class StrategyFacade {
     private LogoutStrategy logoutStrategy;
 
     @Autowired
-    private SelectionStrategy selectionStrategy;
+    private CuratedSelectionStrategy curatedSelectionStrategy;
 
     public LoginStrategy getLoginStrategy() {
         return loginStrategy;
@@ -30,7 +30,7 @@ public class StrategyFacade {
         return logoutStrategy;
     }
 
-    public SelectionStrategy getSelectionStrategy() {
-        return selectionStrategy;
+    public CuratedSelectionStrategy getCuratedSelectionStrategy() {
+        return curatedSelectionStrategy;
     }
 }

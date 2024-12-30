@@ -24,7 +24,7 @@ public class PizzaDisplayHandler extends Handler {
         if (Arrays.asList(AppStateProps.LOGGEDIN).contains(request.getState())) {
             switch (request.getCommand().toLowerCase()) {
                 case "1":
-                    strategyContext.setStrategy(strategyFacade.getSelectionStrategy());
+                    strategyContext.setStrategy(strategyFacade.getCuratedSelectionStrategy());
                     strategyContext.executeStrategy();
                     break;
                 case "2":
