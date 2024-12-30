@@ -57,6 +57,7 @@ public class AccountCreationStrategy implements IStrategy<AppStateProps> {
 
             UserDto userDto = userDtoBuilder.build();
 
+            // network call
             StatusDto status = restTemplate.postForObject(String.format("%s/user/register", pizza_server_url), userDto, StatusDto.class);
 
             if (status != null && !status.status().equals("registered")) {

@@ -18,8 +18,10 @@ public class Colored extends DisplayDecorator {
         return this;
     }
 
+    // mistake, add the super decorator
     @Override
     public void display(String message) {
+        //super.display(color.getCode() + message + TextStyle.RESET.getCode());
         System.out.print(color.getCode() + message + TextStyle.RESET.getCode());
     }
 

@@ -58,7 +58,9 @@ public class ClientApplication implements CommandLineRunner {
 			
 				prompter.DisplayPromptForState();
 				command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(state.prompt)).trim();
-				replChain.getChain().handleRequest(new REPLRequest(command, state.getState()));
+				
+				REPLRequest request = new REPLRequest(command, state.getState());
+				replChain.getChain().handleRequest(request);
 			}
 		} catch (Exception e) {
 			DisplayFacade.getBgDisplay().setBgColor(BgColor.RED).display("An unexpected error occurred.");
