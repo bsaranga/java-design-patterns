@@ -6,14 +6,21 @@ import org.springframework.stereotype.Component;
 import com.pizzeria.cli.client.display.Bg;
 import com.pizzeria.cli.client.display.BgColor;
 import com.pizzeria.cli.client.display.DisplayFacade;
+import com.pizzeria.cli.client.dtos.OrderDto;
+import com.pizzeria.cli.client.state.order.AppState;
 
 @Component
 public class OrderStatus {
+
+    @Autowired
+    private AppState appState;
     
     @Autowired
     private Cart cart;
 
     private OrderType orderType;
+
+    private DeliveryMethod deliveryMethod;
 
     Bg bgDisplay = DisplayFacade.getBgDisplay();
 
@@ -29,5 +36,17 @@ public class OrderStatus {
 
     public OrderType getOrderType() {
         return orderType;
+    }
+
+    public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
+    }
+
+    public DeliveryMethod getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    public OrderDto getOrderDto() {
+        return new OrderDto(orderType, deliveryMethod, cart.getProductIds(), appState.sessionToken);
     }
 }

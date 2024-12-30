@@ -58,7 +58,7 @@ public class ClientApplication implements CommandLineRunner {
 			
 				prompter.DisplayPromptForState();
 				command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(state.prompt)).trim();
-				
+
 				REPLRequest request = new REPLRequest(command, state.getState());
 				replChain.getChain().handleRequest(request);
 			}

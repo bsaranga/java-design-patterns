@@ -56,7 +56,7 @@ public class Prompter {
                 display.display("Enter 'y' to return to pizza selection\n");
                 break;
             case ORDERED:
-                display.display("You may track your order...\n");
+                display.display("Order recieved, awaiting updates...\n");
                 break;
             case EXIT:
                 display.display("You may exit the application...\n");

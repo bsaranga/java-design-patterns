@@ -20,8 +20,9 @@ public class StateHandler extends Handler {
         if (Arrays.asList( "b").contains(request.getCommand())) {
             switch (request.getCommand().toLowerCase()) {
                 case "b" -> {
-                    if (Arrays.asList(AppStateProps.SELECTIONMODE).contains(request.getState())) {
+                    if (Arrays.asList(AppStateProps.SELECTIONMODE, AppStateProps.ORDERED).contains(request.getState())) {
                         state.setState(AppStateProps.LOGGEDIN);
+                        state.setPrompt("Enter command: ");
                     }
                 }
                 default -> {
@@ -30,6 +31,7 @@ public class StateHandler extends Handler {
             }
         } else if (request.getState() == AppStateProps.CANCELLED && request.getCommand().toLowerCase().equals("y")) {
             state.setState(AppStateProps.LOGGEDIN);
+            state.setPrompt("Enter command: ");
         } else {
             handleNext(request);
         }
