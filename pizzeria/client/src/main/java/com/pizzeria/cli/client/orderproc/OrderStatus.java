@@ -18,5 +18,6 @@ public class OrderStatus {
     public void displayNumItemsInCart() {
         int numItems = cart.getProductIds().size();
         bgDisplay.setBgColor(BgColor.CYAN).display(numItems + " items in cart");
+        System.out.println('\n');
     }
 }
