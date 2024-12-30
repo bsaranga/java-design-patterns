@@ -38,17 +38,22 @@ public class OrderStatusObserverStrategy implements IStrategy<AppStateProps> {
     public void execute(IState<AppStateProps> state) {
         try {
             bgDisplay.setBgColor(BgColor.YELLOW).display("Fetching status...");
-            notify(poll(state));
+            notify(poll(state), state);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("An error occurred while retreiving order status", e);
         }
     }
 
-    private void notify(String status) {
+    private void notify(String status, IState<AppStateProps> state) {
         System.out.println("\n");
         bgDisplay.setBgColor(BgColor.GREEN).display("Order status: " + status);
         System.out.println("\n");
+
+        if (status.equals("delivered")) {
+            state.setState(AppStateProps.DELIVERED);
+            state.setPrompt("Enter command: ");
+        }
     }
 
     private String poll(IState<AppStateProps> state) {

@@ -3,6 +3,8 @@ package com.pizzeria.cli.client.strategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pizzeria.cli.client.state.order.AppStateProps;
+
 @Component
 public class StrategyFacade {
     
@@ -23,6 +25,9 @@ public class StrategyFacade {
 
     @Autowired
     private OrderStatusObserverStrategy orderStatusObserverStrategy;
+
+    @Autowired
+    private FeedbackStrategy feedbackStrategy;
 
     public LoginStrategy getLoginStrategy() {
         return loginStrategy;
@@ -46,5 +51,9 @@ public class StrategyFacade {
 
     public OrderStatusObserverStrategy getOrderStatusObserverStrategy() {
         return orderStatusObserverStrategy;
+    }
+
+    public IStrategy<AppStateProps> getFeedbackStrategy() {
+        return feedbackStrategy;
     }
 }

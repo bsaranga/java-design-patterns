@@ -81,6 +81,9 @@ public class Prompter {
                 break;
             case DELIVERED:
                 display.display("Your order has been delivered...\n");
+                display.display("Available Commands:\n");
+                display.display("    f. Add feedback and ratings\n");
+                display.display("    x. Logout & Exit\n\n");
                 break;
             default:
                 display.display("Invalid state...\n");
