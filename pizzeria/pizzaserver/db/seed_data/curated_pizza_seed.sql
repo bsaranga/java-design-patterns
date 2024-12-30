@@ -1,0 +1,6 @@
+INSERT INTO curated_pizzas (name, ingredients, description, price) VALUES
+('Margherita Classica', 'San Marzano tomato sauce, fresh buffalo mozzarella, fresh basil leaves, a drizzle of extra virgin olive oil', 'The quintessential Neapolitan pizza, simple yet bursting with authentic Italian flavors. Perfectly showcases the quality of your ingredients.', 8.50),
+('Quattro Stagioni', 'San Marzano tomato sauce, mozzarella, artichokes, prosciutto cotto (Italian ham), mushrooms, olives, extra virgin olive oil', 'A pizza divided into four sections, each representing a season, giving diners a little taste of everything.', 12.00),
+('Marinara Tradizionale', 'San Marzano tomato sauce, garlic, oregano, extra virgin olive oil', 'A vegan-friendly classic that dates back to 18th-century Naples, highlighting bold, rustic flavors.', 7.00),
+('Diavola', 'San Marzano tomato sauce, mozzarella, spicy Calabrian salami, chili flakes, extra virgin olive oil', 'A fiery delight for spice lovers, embodying the bold and passionate spirit of Italy.', 10.00),
+('Quattro Formaggi', 'Mozzarella, gorgonzola, parmigiano-reggiano, provolone, a drizzle of truffle oil (optional)', 'A cheese lover’s dream, combining four of Italy’s most beloved cheeses into one creamy, indulgent masterpiece.', 11.50);

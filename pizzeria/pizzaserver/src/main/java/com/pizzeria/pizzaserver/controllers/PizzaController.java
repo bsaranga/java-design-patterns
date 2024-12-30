@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pizzeria.pizzaserver.models.PizzaComponent;
-import com.pizzeria.pizzaserver.services.ComponentsService;
+import com.pizzeria.pizzaserver.services.PizzaService;
 
 @RestController
-public class ComponentsController {
+public class PizzaController {
 
     @Autowired
-    private ComponentsService componentsService;
+    private PizzaService pizzaService;
 
     @GetMapping("/getall")
     public List<PizzaComponent> pizzaComponents(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return componentsService.getAllPizzaComponents();
+        return pizzaService.getAllPizzaComponents();
     }
 }
