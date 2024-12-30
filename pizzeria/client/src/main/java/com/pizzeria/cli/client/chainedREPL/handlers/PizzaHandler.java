@@ -8,8 +8,9 @@ import com.pizzeria.cli.client.chainedREPL.Handler;
 import com.pizzeria.cli.client.chainedREPL.REPLRequest;
 import com.pizzeria.cli.client.orderproc.Cart;
 import com.pizzeria.cli.client.orderproc.OrderStatus;
+import com.pizzeria.cli.client.orderproc.OrderType;
+import com.pizzeria.cli.client.state.cache.CacheState;
 import com.pizzeria.cli.client.state.order.AppStateProps;
-import com.pizzeria.cli.client.state.resources.ResourceState;
 import com.pizzeria.cli.client.strategies.Context;
 import com.pizzeria.cli.client.strategies.StrategyFacade;
 
@@ -29,7 +30,7 @@ public class PizzaHandler extends Handler {
     private OrderStatus orderStatus;
 
     @Autowired
-    private ResourceState resourceState;
+    private CacheState cacheState;
 
     @Override
     public void handleRequest(REPLRequest request) {
@@ -47,15 +48,16 @@ public class PizzaHandler extends Handler {
             }
         } else if (request.getCommand().toLowerCase().equals("c")) { // handle order confirmation
             if (cart.getProductIds().size() > 0) {
-                //strategyContext.setStrategy(strategyFacade.getCheckoutStrategy());
-                //strategyContext.executeStrategy();
+                strategyContext.setStrategy(strategyFacade.getCheckoutStrategy());
+                strategyContext.executeStrategy();
             } else {
                 handleNext(request);
             }
         } else if (request.getState() == AppStateProps.SELECTIONMODE && !Arrays.asList("b", "x").contains(request.getCommand())) {
             try {
                 int selectedPizza = Integer.parseInt(request.getCommand()); // throws exception if not a number
-                if (resourceState.getCuratedPizza(selectedPizza) != null) {
+                if (cacheState.getCuratedPizza(selectedPizza) != null) {
+                    orderStatus.setOrderType(OrderType.COLLECTION);
                     cart.addProduct(selectedPizza);
                     strategyContext.setStrategy(strategyFacade.getCuratedSelectionStrategy());
                     strategyContext.executeStrategy();

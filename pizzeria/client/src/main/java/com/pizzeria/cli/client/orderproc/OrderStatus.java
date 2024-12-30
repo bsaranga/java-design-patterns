@@ -13,11 +13,21 @@ public class OrderStatus {
     @Autowired
     private Cart cart;
 
+    private OrderType orderType;
+
     Bg bgDisplay = DisplayFacade.getBgDisplay();
 
     public void displayNumItemsInCart() {
         int numItems = cart.getProductIds().size();
         bgDisplay.setBgColor(BgColor.CYAN).display(numItems + " items in cart");
         System.out.println('\n');
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
+    }
+
+    public OrderType getOrderType() {
+        return orderType;
     }
 }

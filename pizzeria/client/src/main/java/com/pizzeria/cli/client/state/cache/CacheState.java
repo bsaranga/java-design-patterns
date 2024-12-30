@@ -1,4 +1,4 @@
-package com.pizzeria.cli.client.state.resources;
+package com.pizzeria.cli.client.state.cache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.pizzeria.cli.client.dtos.CuratedPizzaDto;
 
 @Component
-public class ResourceState {
+public class CacheState {
     public List<CuratedPizzaDto> curatedPizzas = new ArrayList<>();
 
     public void addCuratedPizza(CuratedPizzaDto pizza) {

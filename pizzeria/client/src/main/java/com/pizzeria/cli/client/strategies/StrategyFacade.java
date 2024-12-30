@@ -18,6 +18,9 @@ public class StrategyFacade {
     @Autowired
     private CuratedSelectionStrategy curatedSelectionStrategy;
 
+    @Autowired
+    private CheckoutStrategy checkoutStrategy;
+
     public LoginStrategy getLoginStrategy() {
         return loginStrategy;
     }
@@ -32,5 +35,9 @@ public class StrategyFacade {
 
     public CuratedSelectionStrategy getCuratedSelectionStrategy() {
         return curatedSelectionStrategy;
+    }
+
+    public CheckoutStrategy getCheckoutStrategy() {
+        return checkoutStrategy;
     }
 }

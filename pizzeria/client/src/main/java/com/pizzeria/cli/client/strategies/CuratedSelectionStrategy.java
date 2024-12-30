@@ -15,8 +15,8 @@ import com.pizzeria.cli.client.display.Colored;
 import com.pizzeria.cli.client.display.DisplayFacade;
 import com.pizzeria.cli.client.dtos.CuratedPizzaDto;
 import com.pizzeria.cli.client.state.IState;
+import com.pizzeria.cli.client.state.cache.CacheState;
 import com.pizzeria.cli.client.state.order.AppStateProps;
-import com.pizzeria.cli.client.state.resources.ResourceState;
 
 @Component
 public class CuratedSelectionStrategy implements IStrategy<AppStateProps> {
@@ -28,7 +28,7 @@ public class CuratedSelectionStrategy implements IStrategy<AppStateProps> {
 	private RestTemplate restTemplate;
 
     @Autowired
-    private ResourceState resourceState;
+    private CacheState cacheState;
 
     Console console = System.console();
     Bg bgDisplay = DisplayFacade.getBgDisplay();
@@ -43,8 +43,8 @@ public class CuratedSelectionStrategy implements IStrategy<AppStateProps> {
 
             CuratedPizzaDto[] pizzasArray = restTemplate.getForObject(String.format("%s/pizza/curated", pizza_server_url), CuratedPizzaDto[].class);
 
-            if (resourceState.curatedPizzas.size() == 0) {
-                resourceState.addCuratedPizzas(Arrays.asList(pizzasArray));
+            if (cacheState.curatedPizzas.size() == 0) {
+                cacheState.addCuratedPizzas(Arrays.asList(pizzasArray));
             }
             
             System.out.println("\n");

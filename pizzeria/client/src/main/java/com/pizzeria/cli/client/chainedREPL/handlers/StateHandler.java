@@ -28,6 +28,8 @@ public class StateHandler extends Handler {
                     handleNext(request);   
                 }
             }
+        } else if (request.getState() == AppStateProps.CANCELLED && request.getCommand().toLowerCase().equals("y")) {
+            state.setState(AppStateProps.LOGGEDIN);
         } else {
             handleNext(request);
         }

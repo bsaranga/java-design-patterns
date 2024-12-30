@@ -13,6 +13,10 @@ public class Cart {
     }
 
     public List<Integer> getProductIds() {
-        return new ArrayList<>(productIds);
+        return productIds;
+    }
+
+    public void clearCart() {
+        productIds.clear();
     }
 }

@@ -53,7 +53,7 @@ public class Prompter {
                 }
                 break;
             case CANCELLED:
-                display.display("You may order again...\n");
+                display.display("Enter 'y' to return to pizza selection\n");
                 break;
             case ORDERED:
                 display.display("You may track your order...\n");
