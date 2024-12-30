@@ -68,6 +68,16 @@ public class PizzaHandler extends Handler {
             } catch (Exception e) {
                 handleNext(request);
             }
+        } else if (request.getState() == AppStateProps.ORDERED) {
+            switch (request.getCommand().toLowerCase()) {
+                case "r":
+                    strategyContext.setStrategy(strategyFacade.getOrderStatusStrategy());
+                    strategyContext.executeStrategy();
+                    break;
+                default:
+                    handleNext(request);
+                    break;
+            }
         } else {
             handleNext(request);
         }

@@ -21,6 +21,9 @@ public class StrategyFacade {
     @Autowired
     private CheckoutStrategy checkoutStrategy;
 
+    @Autowired
+    private OrderStatusStrategy orderStatusStrategy;
+
     public LoginStrategy getLoginStrategy() {
         return loginStrategy;
     }
@@ -39,5 +42,9 @@ public class StrategyFacade {
 
     public CheckoutStrategy getCheckoutStrategy() {
         return checkoutStrategy;
+    }
+
+    public OrderStatusStrategy getOrderStatusStrategy() {
+        return orderStatusStrategy;
     }
 }

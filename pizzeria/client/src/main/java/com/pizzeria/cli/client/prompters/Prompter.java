@@ -56,7 +56,10 @@ public class Prompter {
                 display.display("Enter 'y' to return to pizza selection\n");
                 break;
             case ORDERED:
-                display.display("Order recieved, awaiting updates...\n");
+                display.display("Awaiting updates... Refresh to check updates.\n");
+                display.display("Available Commands:\n");
+                display.display("    r. Refresh for updates\n");
+                display.display("    x. Logout & Exit\n\n");
                 break;
             case EXIT:
                 display.display("You may exit the application...\n");

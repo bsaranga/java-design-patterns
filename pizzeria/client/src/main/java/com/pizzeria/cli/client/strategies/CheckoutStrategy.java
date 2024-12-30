@@ -97,13 +97,13 @@ public class CheckoutStrategy implements IStrategy<AppStateProps> {
                         colorDisplay.setColor(Color.WHITE).display("    3. PayPal\n");
                         var paymentMethod = console.readLine(bgDisplay.setBgColor(BgColor.YELLOW).text(prompt)).trim();
                         if (paymentMethod.equals("1")) {
-                            // payment method selected
+                            // Call external payment gateway
                             break;
                         } else if (paymentMethod.equals("2")) {
-                            // payment method selected
+                            // Call Apple Pay service
                             break;
                         } else if (paymentMethod.equals("3")) {
-                            // payment method selected
+                            // Call PayPal service
                             break;
                         } else {
                             bgDisplay.setBgColor(BgColor.RED).display("Invalid payment method");
@@ -120,8 +120,13 @@ public class CheckoutStrategy implements IStrategy<AppStateProps> {
                         throw new RuntimeException("Payment processing interrupted", e);
                     }
                     colorDisplay.setColor(Color.GREEN).display("Payment successful!\n\n");
+                    
+                    // loyality points accrual in API
+                    int loyaltyPoints = (int) (Math.random() * 10) + 1;
+                    colorDisplay.setColor(Color.GREEN).display("Loyalty points accrued: " + loyaltyPoints + "\n\n");
 
                     // send order to kitchen
+                    colorDisplay.setColor(Color.GREEN).display("Order received...\n\n");
 
                     // change state
                     state.setState(AppStateProps.ORDERED);
