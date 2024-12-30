@@ -1,7 +1,6 @@
 package com.pizzeria.cli.client;
 
 import java.io.Console;
-import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,16 +10,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Profile;
 
-import com.pizzeria.cli.client.commands.Executor;
-import com.pizzeria.cli.client.commands.ExitCommand;
+import com.pizzeria.cli.client.chainedREPL.REPLChain;
+import com.pizzeria.cli.client.chainedREPL.REPLRequest;
 import com.pizzeria.cli.client.display.BgColor;
 import com.pizzeria.cli.client.display.Color;
 import com.pizzeria.cli.client.display.DisplayFacade;
 import com.pizzeria.cli.client.prompters.Prompter;
 import com.pizzeria.cli.client.state.order.AppStateProps;
 import com.pizzeria.cli.client.state.order.AppState;
-import com.pizzeria.cli.client.strategies.Context;
-import com.pizzeria.cli.client.strategies.StrategyFacade;
 
 @Profile("!test")
 @SpringBootApplication
@@ -30,13 +27,7 @@ public class ClientApplication implements CommandLineRunner {
 	private AppState state;
 
 	@Autowired
-	private Executor executor;
-
-	@Autowired
-	private Context strategyContext;
-
-	@Autowired
-	private StrategyFacade strategyFacade;
+	private REPLChain replChain;
 
 	private static final Logger log = LoggerFactory.getLogger(ClientApplication.class);
 
@@ -62,41 +53,7 @@ public class ClientApplication implements CommandLineRunner {
 			
 				prompter.DisplayPromptForState(state.getState());
 				command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(state.prompt)).trim();
-
-				if (Arrays.asList(AppStateProps.NOOP, AppStateProps.REGISTERED).contains(state.getState())) {
-					switch (command.toLowerCase()) {
-						case "1":
-							command = "";
-							strategyContext.setStrategy(strategyFacade.getAccountCreationStrategy());
-							strategyContext.executeStrategy();
-							break;
-						case "2":
-							command = "";
-							strategyContext.setStrategy(strategyFacade.getLoginStrategy());
-							strategyContext.executeStrategy();
-							break;
-						case "3":
-							command = "";
-							executor.setCommand(new ExitCommand()).execute();
-							break;
-					}
-				}
-
-				// Common case for every state
-				switch (command.toLowerCase()) {
-					case "":
-						break;
-					case "3":
-						if (state.getState() == AppStateProps.LOGGEDIN) {
-							strategyContext.setStrategy(strategyFacade.getLogoutStrategy());
-							strategyContext.executeStrategy();
-						}
-						executor.setCommand(new ExitCommand()).execute();
-						break;
-					default:
-						DisplayFacade.getBgDisplay().setBgColor(BgColor.RED).display("Invalid command, try again...");
-						break;
-				}
+				replChain.getChain().handleRequest(new REPLRequest(command, state.getState()));
 			}
 		} catch (Exception e) {
 			DisplayFacade.getBgDisplay().setBgColor(BgColor.RED).display("An unexpected error occurred.");
