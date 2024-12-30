@@ -20,7 +20,7 @@ public class Bg extends DisplayDecorator {
 
     @Override
     public void display(String message) {
-        System.out.print(bgColor.getCode() + message + TextStyle.RESET.getCode());
+        super.display(bgColor.getCode() + message + TextStyle.RESET.getCode());
     }
 
     @Override

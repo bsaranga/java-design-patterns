@@ -8,7 +8,7 @@ public class Bold extends DisplayDecorator {
 
     @Override
     public void display(String message) {
-        System.out.print(TextStyle.BOLD.getCode() + message + TextStyle.RESET.getCode());
+        super.display(TextStyle.BOLD.getCode() + message + TextStyle.RESET.getCode());
     }
 
     @Override
