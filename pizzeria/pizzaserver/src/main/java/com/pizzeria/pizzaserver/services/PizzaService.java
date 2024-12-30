@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pizzeria.pizzaserver.models.CuratedPizza;
-import com.pizzeria.pizzaserver.models.PizzaComponent;
+import com.pizzeria.pizzaserver.models.PizzaIngredient;
 
 @Service
 public class PizzaService {
@@ -18,12 +18,12 @@ public class PizzaService {
     @Autowired
     private Connection connection;
 
-    public List<PizzaComponent> getAllPizzaComponents() {
+    public List<PizzaIngredient> getAllPizzaIngredients() {
         try (
             Statement statement = connection.createStatement();
         ){
             statement.setQueryTimeout(30);
-            List<PizzaComponent> components = new ArrayList<>();
+            List<PizzaIngredient> components = new ArrayList<>();
             
             ResultSet rs = statement.executeQuery("""
                 select c.id, c.name, ct.component_type as type, c.description, c.price from components c 
@@ -31,7 +31,7 @@ public class PizzaService {
                 """);
             
             while (rs.next()) {
-                components.addLast(new PizzaComponent(
+                components.addLast(new PizzaIngredient(
                     rs.getInt("id"),
                     rs.getString("name"),
                     rs.getString("type"),
