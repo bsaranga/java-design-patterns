@@ -13,7 +13,6 @@ import com.pizzeria.cli.client.display.Color;
 import com.pizzeria.cli.client.display.Colored;
 import com.pizzeria.cli.client.display.DisplayFacade;
 import com.pizzeria.cli.client.state.IState;
-import com.pizzeria.cli.client.state.cache.CacheState;
 import com.pizzeria.cli.client.state.order.AppStateProps;
 
 @Component
@@ -24,9 +23,6 @@ public class FeedbackStrategy implements IStrategy<AppStateProps> {
 
     @Autowired
 	private RestTemplate restTemplate;
-
-    @Autowired
-    private CacheState cacheState;
 
     Console console = System.console();
     Bg bgDisplay = DisplayFacade.getBgDisplay();
