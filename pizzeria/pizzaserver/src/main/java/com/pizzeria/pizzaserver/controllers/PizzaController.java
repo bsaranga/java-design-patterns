@@ -31,7 +31,7 @@ public class PizzaController {
     public List<CuratedPizzaDto> curatedPizzas() {
         List<CuratedPizza> curatedPizzas = pizzaService.getAllCuratedPizzas();
         return curatedPizzas.stream()
-                .map(pizza -> new CuratedPizzaDto(pizza.name(), pizza.ingredients(), pizza.description(), pizza.price()))
+                .map(pizza -> new CuratedPizzaDto(pizza.id(), pizza.name(), pizza.ingredients(), pizza.description(), pizza.price()))
                 .collect(Collectors.toList());
     }
 }

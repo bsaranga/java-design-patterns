@@ -32,6 +32,11 @@ public class Prompter {
                 display.display("    2. Build Your Own Pizza\n");
                 display.display("    3. Logout & Exit\n\n");
                 break;
+            case SELECTIONMODE:
+                display.display("Available Commands:\n");
+                display.display("    b. Go back\n");
+                display.display("    x. Logout & Exit\n\n");
+                break;
             case ADDED:
                 display.display("You may add more items or order...\n");
                 break;

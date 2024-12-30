@@ -1,4 +1,4 @@
-package com.pizzeria.pizzaserver.dto;
+package com.pizzeria.cli.client.dtos;
 
 public record CuratedPizzaDto(
     int id,

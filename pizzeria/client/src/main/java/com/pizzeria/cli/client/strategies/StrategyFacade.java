@@ -15,6 +15,9 @@ public class StrategyFacade {
     @Autowired
     private LogoutStrategy logoutStrategy;
 
+    @Autowired
+    private SelectionStrategy selectionStrategy;
+
     public LoginStrategy getLoginStrategy() {
         return loginStrategy;
     }
@@ -25,5 +28,9 @@ public class StrategyFacade {
 
     public LogoutStrategy getLogoutStrategy() {
         return logoutStrategy;
+    }
+
+    public SelectionStrategy getSelectionStrategy() {
+        return selectionStrategy;
     }
 }

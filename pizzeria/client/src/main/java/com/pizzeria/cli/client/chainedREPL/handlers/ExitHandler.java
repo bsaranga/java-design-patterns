@@ -27,24 +27,24 @@ public class ExitHandler extends Handler {
 
     @Override
     public void handleRequest(REPLRequest request) {
-        if (Arrays.asList("", "3").contains(request.getCommand())) {
+        if (Arrays.asList("", "3", "x").contains(request.getCommand())) {
             switch (request.getCommand().toLowerCase()) {
-                case "":
-                    break;
-                case "3":
-                    if (request.getState() == AppStateProps.LOGGEDIN) {
+                case "" -> {
+
+                }
+                case "3", "x" -> {
+                    if (!Arrays.asList(AppStateProps.NOOP, AppStateProps.REGISTERED, AppStateProps.LOGGEDOUT).contains(request.getState())) {
                         strategyContext.setStrategy(strategyFacade.getLogoutStrategy());
                         strategyContext.executeStrategy();
                     }
                     executor.setCommand(new ExitCommand()).execute();
-                    break;
-                default:
-                    handleNext(request);
-                    break;
+                }
+                default -> {
+                    handleNext(request);   
+                }
             }
         } else {
             handleNext(request);
         }
-    }
-    
+    }    
 }
