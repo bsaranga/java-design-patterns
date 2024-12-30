@@ -1,15 +1,15 @@
 package com.pizzeria.cli.client.prompters;
 
+import org.springframework.stereotype.Component;
+
+import com.pizzeria.cli.client.display.DisplayFacade;
 import com.pizzeria.cli.client.display.IDisplay;
 import com.pizzeria.cli.client.state.order.AppStateProps;
 
+@Component
 public class Prompter {
     
-    private IDisplay display;
-    
-    public Prompter(IDisplay display) {
-        this.display = display;
-    }
+    private IDisplay display = DisplayFacade.getDisplay();
 
     public void DisplayPromptForState(AppStateProps stateProp) {
         switch (stateProp) {
@@ -36,12 +36,6 @@ public class Prompter {
                 display.display("Available Commands:\n");
                 display.display("    b. Go back\n");
                 display.display("    x. Logout & Exit\n\n");
-                break;
-            case ADDED:
-                display.display("You may add more items or order...\n");
-                break;
-            case EMPTIED:
-                display.display("You may add items or order...\n");
                 break;
             case CANCELLED:
                 display.display("You may order again...\n");

@@ -1,6 +1,7 @@
 package com.pizzeria.cli.client.strategies;
 
 import java.io.Console;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import com.pizzeria.cli.client.display.DisplayFacade;
 import com.pizzeria.cli.client.dtos.CuratedPizzaDto;
 import com.pizzeria.cli.client.state.IState;
 import com.pizzeria.cli.client.state.order.AppStateProps;
+import com.pizzeria.cli.client.state.resources.ResourceState;
 
 @Component
 public class CuratedSelectionStrategy implements IStrategy<AppStateProps> {
@@ -24,6 +26,9 @@ public class CuratedSelectionStrategy implements IStrategy<AppStateProps> {
 
     @Autowired
 	private RestTemplate restTemplate;
+
+    @Autowired
+    private ResourceState resourceState;
 
     Console console = System.console();
     Bg bgDisplay = DisplayFacade.getBgDisplay();
@@ -37,6 +42,10 @@ public class CuratedSelectionStrategy implements IStrategy<AppStateProps> {
         try {
 
             CuratedPizzaDto[] pizzasArray = restTemplate.getForObject(String.format("%s/pizza/curated", pizza_server_url), CuratedPizzaDto[].class);
+
+            if (resourceState.curatedPizzas.size() == 0) {
+                resourceState.addCuratedPizzas(Arrays.asList(pizzasArray));
+            }
             
             System.out.println("\n");
             if (pizzasArray != null && pizzasArray.length > 0) {

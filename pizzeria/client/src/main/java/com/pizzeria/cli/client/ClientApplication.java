@@ -15,6 +15,7 @@ import com.pizzeria.cli.client.chainedREPL.REPLRequest;
 import com.pizzeria.cli.client.display.BgColor;
 import com.pizzeria.cli.client.display.Color;
 import com.pizzeria.cli.client.display.DisplayFacade;
+import com.pizzeria.cli.client.orderproc.Cart;
 import com.pizzeria.cli.client.prompters.Prompter;
 import com.pizzeria.cli.client.state.order.AppStateProps;
 import com.pizzeria.cli.client.state.order.AppState;
@@ -29,6 +30,12 @@ public class ClientApplication implements CommandLineRunner {
 	@Autowired
 	private REPLChain replChain;
 
+	@Autowired
+	private Prompter prompter;
+
+	@Autowired
+	private Cart cart; // just to initialize
+
 	private static final Logger log = LoggerFactory.getLogger(ClientApplication.class);
 
 	private final Console console = System.console();
@@ -41,8 +48,6 @@ public class ClientApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		try {
-			Prompter prompter = new Prompter(DisplayFacade.getDisplay());
-
 			DisplayFacade.getBoldDisplay().display("🍕🍕🍕 Welcome to Arshvin's Pizzeria 🍕🍕🍕\n");
 			DisplayFacade.getColorDisplay().setColor(Color.GREEN).display("つ ◕_◕ ༽つ Authentic Italian Pizza ‧₊˚⋅𓐐𓎩 ‧₊˚⋅\n\n");
 			

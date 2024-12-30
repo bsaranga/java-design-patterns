@@ -1,14 +1,14 @@
 package com.pizzeria.cli.client.state.order;
-import org.springframework.stereotype.Component;
 
+import org.springframework.stereotype.Component;
 import com.pizzeria.cli.client.state.IState;
 
 @Component
 public class AppState implements IState<AppStateProps> {
     
     private AppStateProps state;
+
     public String prompt;
-    
     public String loggedInUser;
     public String sessionToken;
 

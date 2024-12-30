@@ -6,12 +6,10 @@ public enum AppStateProps {
     REGISTERED("registered"),
     LOGGEDIN("loggedin"),
     LOGGEDOUT("loggedout"),
-    SELECTIONMODE("selectionmode"),
     EXIT("exit"),
 
     // order states
-    ADDED("add"),
-    EMPTIED("remove"),
+    SELECTIONMODE("selectionmode"),
     CANCELLED("cancel"),
     ORDERED("order"),
 

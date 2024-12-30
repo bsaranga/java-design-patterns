@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.pizzeria.cli.client.chainedREPL.handlers.EntryHandler;
 import com.pizzeria.cli.client.chainedREPL.handlers.ExitHandler;
 import com.pizzeria.cli.client.chainedREPL.handlers.InvalidHandler;
-import com.pizzeria.cli.client.chainedREPL.handlers.PizzaDisplayHandler;
+import com.pizzeria.cli.client.chainedREPL.handlers.PizzaHandler;
 import com.pizzeria.cli.client.chainedREPL.handlers.StateHandler;
 
 @Component
@@ -22,7 +22,7 @@ public class REPLChain {
     private InvalidHandler invalidHandler;
 
     @Autowired
-    private PizzaDisplayHandler pizzaDisplayHandler;
+    private PizzaHandler pizzaHandler;
 
     @Autowired
     private StateHandler stateHandler;
@@ -35,8 +35,8 @@ public class REPLChain {
     */
     public Handler getChain() {
         // define the chain and return
-        entryHandler.setNextHandler(pizzaDisplayHandler);
-        pizzaDisplayHandler.setNextHandler(stateHandler);
+        entryHandler.setNextHandler(pizzaHandler);
+        pizzaHandler.setNextHandler(stateHandler);
         stateHandler.setNextHandler(exitHandler);
         exitHandler.setNextHandler(invalidHandler);
 
