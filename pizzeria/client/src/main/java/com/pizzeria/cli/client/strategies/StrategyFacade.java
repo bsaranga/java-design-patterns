@@ -29,6 +29,9 @@ public class StrategyFacade {
     @Autowired
     private FeedbackStrategy feedbackStrategy;
 
+    @Autowired
+    private PizzaBuilderStrategy pizzaBuilderStrategy;
+
     public LoginStrategy getLoginStrategy() {
         return loginStrategy;
     }
@@ -55,5 +58,9 @@ public class StrategyFacade {
 
     public IStrategy<AppStateProps> getFeedbackStrategy() {
         return feedbackStrategy;
+    }
+
+    public PizzaBuilderStrategy getPizzaBuilderStrategy() {
+        return pizzaBuilderStrategy;
     }
 }

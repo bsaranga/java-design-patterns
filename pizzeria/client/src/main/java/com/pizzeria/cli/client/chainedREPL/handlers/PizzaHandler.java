@@ -41,6 +41,8 @@ public class PizzaHandler extends Handler {
                     strategyContext.executeStrategy();
                     break;
                 case "2":
+                    strategyContext.setStrategy(strategyFacade.getPizzaBuilderStrategy());
+                    strategyContext.executeStrategy();
                     break;
                 default:
                     handleNext(request);

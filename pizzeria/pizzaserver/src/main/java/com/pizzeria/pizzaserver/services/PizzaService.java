@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.pizzeria.pizzaserver.models.CuratedPizza;
 import com.pizzeria.pizzaserver.models.PizzaIngredient;
+import java.util.Collections;
 
 @Service
 public class PizzaService {
@@ -70,6 +71,37 @@ public class PizzaService {
             }
 
             return pizzas;
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return List.of();
+    }
+
+    public List<PizzaIngredient> getRandomPizzaIngredientsByType(String componentType) {
+        try (
+            Statement statement = connection.createStatement();
+        ){
+            statement.setQueryTimeout(30);
+            List<PizzaIngredient> components = new ArrayList<>();
+            
+            ResultSet rs = statement.executeQuery("""
+                select c.id, c.name, ct.component_type as type, c.description, c.price from components c 
+                inner join components_types ct on c.type_id = ct.id
+                where ct.component_type = '""" + componentType + "'");
+
+            while (rs.next()) {
+                components.add(new PizzaIngredient(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("type"),
+                    rs.getString("description"),
+                    rs.getDouble("price")
+                ));
+            }
+
+            Collections.shuffle(components);
+            return components.stream().limit(5).toList();
 
         } catch (Exception e) {
             System.out.println(e);

@@ -152,6 +152,7 @@ public class CheckoutStrategy implements IStrategy<AppStateProps> {
                     // change state
                     state.setState(AppStateProps.ORDERED);
                     state.setPrompt("Enter command: ");
+                    cart.clearCart();
 
                 } else {
                     cart.clearCart();
