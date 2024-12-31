@@ -249,6 +249,17 @@ public class PizzaBuilderStrategy implements IStrategy<AppStateProps> {
             colorDisplay.setColor(Color.GREEN).display("Seasoning: " + customPizzaDto.seasoning() + "\n");
             colorDisplay.setColor(Color.GREEN).display("Price: $" + customPizzaDto.price() + "\n\n");
 
+            // Mark the pizza as favorite
+            colorDisplay.setColor(Color.GREEN).display("Would you like to mark this pizza as a favorite? (yes/no): ");
+            String favoriteResponse = console.readLine().trim().toLowerCase();
+            if (favoriteResponse.equals("yes")) {
+                String favoriteUrl = pizza_server_url + "/pizza/favorite";
+                //restTemplate.postForObject(favoriteUrl, customPizzaDto, CustomPizzaDto.class);
+                boldDisplay.display("Your pizza has been marked as a favorite!\n");
+            } else {
+                boldDisplay.display("Your pizza has not been marked as a favorite.\n");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("An error occurred during pizza creation", e);
