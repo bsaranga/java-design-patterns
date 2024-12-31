@@ -60,6 +60,8 @@ public class ClientApplication implements CommandLineRunner {
 				command = console.readLine(DisplayFacade.getBgDisplay().setBgColor(BgColor.YELLOW).text(state.prompt)).trim();
 
 				REPLRequest request = new REPLRequest(command, state.getState());
+
+				// chain of responsibility
 				replChain.getChain().handleRequest(request);
 			}
 		} catch (Exception e) {
